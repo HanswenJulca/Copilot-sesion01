@@ -1,0 +1,22 @@
+version: "3.9"
+
+# ⚠️  This file is for local development / demonstration only.
+# Override SECRET_KEY (and any other secrets) via a .env file or
+# docker-compose.override.yml — never commit real secrets to version control.
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: jwt_backend
+    ports:
+      - "8000:8000"
+    environment:
+      - SECRET_KEY=${SECRET_KEY:-change-me-in-production}
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
