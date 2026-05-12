@@ -1,9 +1,8 @@
 import { Navigate } from 'react-router-dom';
-import { getAccessToken } from '../services/auth';
+import { isSessionValid } from '../services/auth';
 
 export default function ProtectedRoute({ children }) {
-  const token = getAccessToken();
-  if (!token) {
+  if (!isSessionValid()) {
     return <Navigate to="/login" replace />;
   }
   return children;

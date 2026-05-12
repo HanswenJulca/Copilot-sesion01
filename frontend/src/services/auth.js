@@ -30,6 +30,12 @@ export function clearSession() {
   sessionStorage.removeItem('expires_in');
 }
 
+/**
+ * Decode the JWT payload for display purposes only (e.g. showing the username).
+ * NOTE: This does NOT verify the signature — all authorization decisions must be
+ * enforced server-side by the backend, which validates every token on protected
+ * endpoints.
+ */
 export function getUsernameFromToken() {
   const token = getAccessToken();
   if (!token) return null;
@@ -39,4 +45,26 @@ export function getUsernameFromToken() {
   } catch {
     return null;
   }
+}
+
+/**
+ * Decode the JWT payload and return it, or null if the token is missing/malformed.
+ * Used for client-side expiration checks. Signature is NOT verified here.
+ */
+export function decodeTokenPayload() {
+  const token = getAccessToken();
+  if (!token) return null;
+  try {
+    return JSON.parse(atob(token.split('.')[1]));
+  } catch {
+    return null;
+  }
+}
+
+/** Returns true if the stored access token exists and has not yet expired. */
+export function isSessionValid() {
+  const payload = decodeTokenPayload();
+  if (!payload) return false;
+  // `exp` is in seconds (Unix timestamp)
+  return payload.exp * 1000 > Date.now();
 }
