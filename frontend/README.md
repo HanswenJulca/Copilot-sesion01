@@ -4,9 +4,9 @@ A clean, professional React single-page application that provides authentication
 
 ## Tech Stack
 
-- **React 18** — UI library
+- **React 19** — UI library
 - **Vite** — build tool and dev server (port 3000)
-- **React Router v6** — client-side routing
+- **React Router v7** — client-side routing
 - Plain CSS (inline styles) — no external UI framework
 
 ## Project Structure
