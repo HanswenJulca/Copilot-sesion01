@@ -74,7 +74,7 @@ export default function Welcome() {
     navigate('/login', { replace: true });
   }
 
-  const initial = username ? username[0].toUpperCase() : '?';
+  const initial = username && username.length > 0 ? username[0].toUpperCase() : '?';
 
   return (
     <div style={styles.page}>
