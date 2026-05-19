@@ -193,8 +193,8 @@ export default function Calculator() {
     }
   }
 
-  function handleOperationSelect(op) {
-    setOperation(op.name);
+  function handleOperationSelect(selectedOperation) {
+    setOperation(selectedOperation.name);
   }
 
   function handleKeyPress(e) {

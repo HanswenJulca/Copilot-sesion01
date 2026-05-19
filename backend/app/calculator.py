@@ -65,11 +65,6 @@ def calculate(request: CalculationRequest):
                     detail="Cannot divide by zero"
                 )
             result = num1 / num2
-        else:
-            raise HTTPException(
-                status_code=400,
-                detail="Invalid operation"
-            )
 
         expression = f"{num1} {symbol} {num2} = {result}"
         return CalculationResponse(result=result, operation=symbol, expression=expression)
