@@ -61,17 +61,37 @@ const styles = {
     cursor: 'pointer',
     transition: 'background-color 0.2s, color 0.2s',
     fontFamily: 'inherit',
+    marginBottom: '12px',
+  },
+  buttonPrimary: {
+    width: '100%',
+    padding: '12px',
+    backgroundColor: '#2563eb',
+    color: '#ffffff',
+    border: 'none',
+    borderRadius: '8px',
+    fontSize: '15px',
+    fontWeight: '600',
+    cursor: 'pointer',
+    transition: 'background-color 0.2s',
+    fontFamily: 'inherit',
+    marginBottom: '12px',
   },
 };
 
 export default function Welcome() {
-  const [hovered, setHovered] = useState(false);
+  const [hoveredLogout, setHoveredLogout] = useState(false);
+  const [hoveredCalculator, setHoveredCalculator] = useState(false);
   const navigate = useNavigate();
   const username = getUsernameFromToken();
 
   function handleLogout() {
     clearSession();
     navigate('/login', { replace: true });
+  }
+
+  function handleCalculator() {
+    navigate('/calculator');
   }
 
   const initial = username && username.length > 0 ? username[0].toUpperCase() : '?';
@@ -87,14 +107,26 @@ export default function Welcome() {
         <div style={styles.divider} />
 
         <button
+          onClick={handleCalculator}
+          style={{
+            ...styles.buttonPrimary,
+            backgroundColor: hoveredCalculator ? '#1d4ed8' : '#2563eb',
+          }}
+          onMouseEnter={() => setHoveredCalculator(true)}
+          onMouseLeave={() => setHoveredCalculator(false)}
+        >
+          Calculadora
+        </button>
+
+        <button
           onClick={handleLogout}
           style={{
             ...styles.button,
-            backgroundColor: hovered ? '#2563eb' : 'transparent',
-            color: hovered ? '#ffffff' : '#2563eb',
+            backgroundColor: hoveredLogout ? '#2563eb' : 'transparent',
+            color: hoveredLogout ? '#ffffff' : '#2563eb',
           }}
-          onMouseEnter={() => setHovered(true)}
-          onMouseLeave={() => setHovered(false)}
+          onMouseEnter={() => setHoveredLogout(true)}
+          onMouseLeave={() => setHoveredLogout(false)}
         >
           Cerrar Sesión
         </button>
